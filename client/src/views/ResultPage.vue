@@ -1,9 +1,10 @@
 <template>
-  <div class="result-page" :style="{ background: pageGradient }">
+  <div class="result-page">
     <div class="container">
       <!-- 结果卡片（用于生成图片） -->
       <div class="result-card" ref="resultCardRef">
-        <div class="result-header" :style="{ background: resultColor }">
+        <div class="result-header">
+          <div class="decorative-icon">✨</div>
           <h1 class="result-type">{{ result?.type }}</h1>
           <div class="result-tags">
             <span v-for="tag in result?.tags" :key="tag" class="tag">{{ tag }}</span>
@@ -12,6 +13,8 @@
 
         <div class="result-content">
           <p class="result-description">{{ result?.description }}</p>
+
+          <div class="section-divider"></div>
 
           <div class="personality-section">
             <h3>性格特质</h3>
@@ -23,7 +26,6 @@
             <p class="recommendation-text">{{ result?.recommendation }}</p>
             <div class="perfume-list">
               <div v-for="perfume in result?.perfumeList" :key="perfume" class="perfume-item">
-                <span class="perfume-icon">🌸</span>
                 <span>{{ perfume }}</span>
               </div>
             </div>
@@ -32,10 +34,6 @@
           <div class="share-text">
             {{ result?.shareText }}
           </div>
-        </div>
-
-        <div class="result-footer">
-          <p>长按保存图片，分享给朋友</p>
         </div>
       </div>
 
@@ -48,9 +46,16 @@
       </div>
 
       <!-- 底部提示 -->
-      <div class="footer-hint">
+      <div class="footer-hint" v-if="!exporting">
         本测评仅供娱乐参考，不作为专业建议
       </div>
+
+      <!-- 自定义 Toast 提示 -->
+      <Transition name="fade">
+        <div class="toast" v-if="toast.show">
+          <span>{{ toast.message }}</span>
+        </div>
+      </Transition>
     </div>
   </div>
 </template>
@@ -66,23 +71,22 @@ const store = useTestStore()
 
 const resultCardRef = ref(null)
 const exporting = ref(false)
+const toast = ref({ show: false, message: '', type: 'success' })
 
 const result = computed(() => store.result)
-
-const resultColor = computed(() => {
-  return result.value?.color || '#667eea'
-})
-
-const pageGradient = computed(() => {
-  const color = result.value?.color || '#667eea'
-  return `linear-gradient(135deg, ${color}20 0%, ${color}05 100%)`
-})
 
 onMounted(() => {
   if (!store.result) {
     router.push('/error')
   }
 })
+
+function showToastMsg (msg, type = 'success') {
+  toast.value = { show: true, message: msg, type }
+  setTimeout(() => {
+    toast.value.show = false
+  }, 3000)
+}
 
 async function exportImage () {
   if (!resultCardRef.value) return
@@ -91,12 +95,11 @@ async function exportImage () {
 
   try {
     const canvas = await html2canvas(resultCardRef.value, {
-      backgroundColor: '#ffffff',
-      scale: 2,
+      backgroundColor: '#F9F5F1', // 使用暖色背景，解决“过曝”感
+      scale: 3, // 恢复高清晰度，解决文字模糊
       useCORS: true,
       logging: false,
-      windowWidth: 750,
-      windowHeight: resultCardRef.value.scrollHeight
+      windowWidth: 700,
     })
 
     // 转换为图片并下载
@@ -104,13 +107,14 @@ async function exportImage () {
     const link = document.createElement('a')
     link.download = `我的香水性格-${result.value.type}.png`
     link.href = dataURL
+    document.body.appendChild(link)
     link.click()
+    document.body.removeChild(link)
 
-    // 显示成功提示
-    alert('✅ 图片已保存到下载文件夹！')
+    showToastMsg('图片已保存，请查看相册或下载文件', 'success')
   } catch (error) {
-    console.error('图片导出失败:', error)
-    alert('❌ 图片生成失败，请重试')
+    console.error('图片导出失 败:', error)
+    showToastMsg('生成失败，请重试', 'error')
   } finally {
     exporting.value = false
   }
@@ -120,113 +124,115 @@ async function exportImage () {
 <style scoped>
 .result-page {
   min-height: 100vh;
-  padding: 40px 20px;
+  background-color: #F9F5F1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .container {
   max-width: 600px;
+  width: 100%;
   margin: 0 auto;
+  padding: 20px 0 40px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .result-card {
   background: white;
-  border-radius: 24px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(139, 94, 60, 0.05);
+  /* 暖色阴影 */
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  margin-bottom: 30px;
   animation: scaleIn 0.6s ease-out;
 }
 
 .result-header {
-  padding: 50px 30px;
+  padding: 40px 30px 20px;
   text-align: center;
-  color: white;
-  position: relative;
-  overflow: hidden;
+  /* 去掉原有深色背景，改用暖色文字 */
+  background: transparent;
 }
 
-.result-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+.decorative-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+  opacity: 0.8;
 }
 
 .result-type {
-  position: relative;
-  font-size: 36px;
+  font-family: "Songti SC", "SimSun", "STSong", serif;
+  font-size: 32px;
   font-weight: 700;
-  margin-bottom: 16px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  color: #4A3B32;
+  /* 深棕色 */
+  margin-bottom: 20px;
+  letter-spacing: 2px;
 }
 
 .result-tags {
-  position: relative;
   display: flex;
-  gap: 8px;
+  gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
 }
 
 .tag {
   padding: 6px 16px;
-  background: rgba(255, 255, 255, 0.3);
+  background: #FAF5F0;
+  border: 1px solid #E6D8C8;
   border-radius: 20px;
   font-size: 14px;
-  backdrop-filter: blur(10px);
+  color: #8B735B;
 }
 
 .result-content {
-  padding: 40px 30px;
+  padding: 20px 30px 40px;
 }
 
 .result-description {
   font-size: 16px;
   line-height: 1.8;
-  color: #333;
-  margin-bottom: 32px;
+  color: #5C4E42;
+  margin-bottom: 20px;
   text-align: justify;
+  font-weight: 400;
 }
 
-.personality-section,
-.recommendation-section {
-  margin-bottom: 32px;
+.section-divider {
+  height: 1px;
+  background: #F0E6D8;
+  margin: 30px 0;
+  width: 100%;
 }
 
 .personality-section h3,
 .recommendation-section h3 {
   font-size: 18px;
-  color: #333;
-  margin-bottom: 12px;
+  color: #8B735B;
+  margin-bottom: 6px;
   font-weight: 600;
   display: flex;
   align-items: center;
-}
-
-.personality-section h3::before {
-  content: '✨';
-  margin-right: 8px;
-}
-
-.recommendation-section h3::before {
-  content: '🌸';
-  margin-right: 8px;
+  font-family: "Songti SC", serif;
 }
 
 .personality-section p {
   font-size: 15px;
-  color: #666;
+  color: #5C4E42;
   line-height: 1.6;
+  margin-bottom: 4px;
 }
 
 .recommendation-text {
   font-size: 15px;
-  color: #667eea;
-  margin-bottom: 16px;
-  font-weight: 500;
+  color: #8B735B;
+  margin-bottom: 20px;
 }
 
 .perfume-list {
@@ -238,39 +244,43 @@ async function exportImage () {
   display: flex;
   align-items: center;
   padding: 12px 16px;
-  background: #f8f9fa;
+  background: #FAF5F0;
+  border: 1px solid #E6D8C8;
   border-radius: 12px;
   font-size: 14px;
-  color: #333;
+  color: #5C4E42;
 }
 
 .perfume-icon {
   margin-right: 12px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .share-text {
+  margin-top: 30px;
   text-align: center;
-  padding: 24px;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
-  border-radius: 16px;
-  font-size: 16px;
-  color: #667eea;
+  padding: 20px;
+  background: #FDFBF8;
+  border: 1px dashed #D4A373;
+  border-radius: 12px;
+  font-size: 15px;
+  color: #8B735B;
   font-weight: 500;
 }
 
 .result-footer {
-  padding: 20px;
+  padding: 15px;
   text-align: center;
-  background: #f8f9fa;
-  color: #999;
-  font-size: 13px;
+  background: #FAF5F0;
+  color: #9C8975;
+  font-size: 12px;
+  border-top: 1px solid #F0E6D8;
 }
 
 .actions {
   display: flex;
-  gap: 12px;
   justify-content: center;
+  margin-bottom: 20px;
   animation: fadeInUp 0.6s ease-out 0.3s both;
 }
 
@@ -278,47 +288,40 @@ async function exportImage () {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 16px 32px;
+  padding: 14px 40px;
   border: none;
-  border-radius: 16px;
+  border-radius: 25px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-}
-
-.action-button.primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #D4A373;
   color: white;
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(212, 163, 115, 0.3);
 }
 
-.action-button.primary:hover:not(:disabled) {
+.action-button:hover:not(:disabled) {
+  background: #C69260;
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
 }
 
-.action-button.primary:disabled {
-  opacity: 0.6;
+.action-button:disabled {
+  background: #E6D8C8;
   cursor: not-allowed;
-}
-
-.icon {
-  font-size: 20px;
 }
 
 .footer-hint {
   text-align: center;
-  margin-top: 24px;
-  color: #999;
-  font-size: 13px;
+  color: #9C8975;
+  font-size: 12px;
+  opacity: 0.8;
   animation: fadeIn 0.6s ease-out 0.6s both;
 }
 
 @keyframes scaleIn {
   from {
     opacity: 0;
-    transform: scale(0.95) translateY(20px);
+    transform: scale(0.98) translateY(20px);
   }
 
   to {
@@ -349,26 +352,58 @@ async function exportImage () {
   }
 }
 
+/* Toast 样式 */
+.toast {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(74, 59, 50, 0.95);
+  color: #FFFDF9;
+  padding: 16px 24px;
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 30px rgba(74, 59, 50, 0.25);
+  z-index: 2000;
+  backdrop-filter: blur(4px);
+  min-width: 200px;
+  justify-content: center;
+}
+
+
+/* 渐变过渡 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -40%);
+  /* 稍微向下偏移一点 */
+}
+
 /* 响应式 */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .result-page {
-    padding: 20px 16px;
+    padding: 15px;
   }
 
   .result-header {
-    padding: 40px 24px;
+    padding: 30px 20px 10px;
   }
 
   .result-type {
-    font-size: 30px;
+    font-size: 28px;
   }
 
   .result-content {
-    padding: 32px 24px;
-  }
-
-  .result-description {
-    font-size: 15px;
+    padding: 10px 20px 30px;
   }
 }
 </style>

@@ -381,17 +381,92 @@ async function submitAnswers () {
 
 /* 弹窗样式调整 */
 .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(74, 59, 50, 0.4);
   /* 深棕色遮罩 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.3s;
 }
 
 .modal-content {
   background: #FFFDF9;
   border: 1px solid #E6D8C8;
+  border-radius: 20px;
+  padding: 40px 30px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  animation: scaleIn 0.3s ease-out;
+  box-shadow: 0 10px 40px rgba(74, 59, 50, 0.1);
+}
+
+.modal-content h3 {
+  font-size: 24px;
+  color: #4A3B32;
+  margin-bottom: 12px;
+  font-family: "Songti SC", serif;
+}
+
+.modal-content p {
+  color: #8B735B;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.modal-content .hint {
+  font-size: 14px;
+  color: #9C8975;
+  margin-bottom: 24px;
+}
+
+.modal-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.modal-btn {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.modal-btn.cancel {
+  background: transparent;
+  border: 1px solid #E6D8C8;
+  color: #8B735B;
+}
+
+.modal-btn.cancel:hover {
+  background: #FAF5F0;
 }
 
 .modal-btn.confirm {
   background: #D4A373;
+  color: white;
+}
+
+.modal-btn.confirm:hover:not(:disabled) {
+  background: #C69260;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 163, 115, 0.3);
+}
+
+.modal-btn.confirm:disabled {
+  background: #E6D8C8;
+  cursor: not-allowed;
 }
 
 /* 响应式 */
