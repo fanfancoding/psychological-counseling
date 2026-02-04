@@ -276,6 +276,15 @@ async function submitAnswers () {
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: left;
+  outline: none;
+  /* 移除焦点边框 */
+  -webkit-tap-highlight-color: transparent;
+  /* 移除移动端点击高亮 */
+}
+
+.option-button:focus {
+  outline: none;
+  /* 确保获取焦点时无边框 */
 }
 
 .option-button:hover {

@@ -46,6 +46,13 @@ button {
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus,
+button:focus-visible {
+  outline: none;
 }
 
 /* Remove forced dark mode if previously present or just ensuring light mode consistency */
