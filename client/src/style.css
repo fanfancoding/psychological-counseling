@@ -1,0 +1,57 @@
+:root {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    "Songti SC",
+    "SimSun",
+    sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light;
+  color: #5c4e42; /* Global text warm brown */
+  background-color: #f9f5f1; /* Warm background */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: block; /* fix: was flex centering everything */
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#app {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+/* Remove forced dark mode if previously present or just ensuring light mode consistency */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #5c4e42;
+    background-color: #f9f5f1;
+  }
+}

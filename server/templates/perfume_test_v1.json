@@ -1,0 +1,489 @@
+{
+  "templateId": "perfume_test_v1",
+  "title": "你的性格底色适合什么味道的香水",
+  "description": "通过30个精心设计的问题，探索你的性格底色，找到最适合你的香水类型",
+  "cover": "/images/perfume_cover.jpg",
+  "totalQuestions": 30,
+
+  "questions": [
+    {
+      "id": "q1",
+      "question": "你更喜欢哪种口感的饮品？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "清爽的气泡水" },
+        { "key": "elegant", "text": "回甘的清茶" },
+        { "key": "bold", "text": "烈酒或特调鸡尾酒" },
+        { "key": "warm", "text": "浓郁的热可可" }
+      ]
+    },
+    {
+      "id": "q2",
+      "question": "周末你更愿意？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "户外运动，享受阳光" },
+        { "key": "elegant", "text": "在家阅读或品茶" },
+        { "key": "mysterious", "text": "探索小众艺术展" },
+        { "key": "romantic", "text": "与朋友烛光晚餐" }
+      ]
+    },
+    {
+      "id": "q3",
+      "question": "你的穿衣风格更接近？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "简约休闲，舒适自在" },
+        { "key": "elegant", "text": "知性优雅，细节考究" },
+        { "key": "bold", "text": "个性前卫，大胆出挑" },
+        { "key": "romantic", "text": "温柔浪漫，柔美飘逸" }
+      ]
+    },
+    {
+      "id": "q4",
+      "question": "面对压力时，你通常会？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "出门散步，亲近自然" },
+        { "key": "calm", "text": "冥想或瑜伽放松" },
+        { "key": "bold", "text": "运动发泄或K歌" },
+        { "key": "warm", "text": "和好友倾诉" }
+      ]
+    },
+    {
+      "id": "q5",
+      "question": "你更喜欢哪个季节？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "春天，万物复苏" },
+        { "key": "bright", "text": "夏天，热情奔放" },
+        { "key": "elegant", "text": "秋天，沉静内敛" },
+        { "key": "warm", "text": "冬天，温暖治愈" }
+      ]
+    },
+    {
+      "id": "q6",
+      "question": "你更向往哪种旅行目的地？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "森林湖泊，清新自然" },
+        { "key": "exotic", "text": "海岛沙滩，热带风情" },
+        { "key": "mysterious", "text": "古堡教堂，神秘历史" },
+        { "key": "warm", "text": "小镇咖啡馆，温馨惬意" }
+      ]
+    },
+    {
+      "id": "q7",
+      "question": "你的社交模式更像？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "随和开朗，容易相处" },
+        { "key": "calm", "text": "慢热内敛，深交为主" },
+        { "key": "bold", "text": "自信外向，朋友众多" },
+        { "key": "mysterious", "text": "独立自主，享受独处" }
+      ]
+    },
+    {
+      "id": "q8",
+      "question": "你更喜欢哪种花？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "雏菊或向日葵" },
+        { "key": "romantic", "text": "玫瑰或牡丹" },
+        { "key": "elegant", "text": "百合或兰花" },
+        { "key": "mysterious", "text": "薰衣草或鸢尾" }
+      ]
+    },
+    {
+      "id": "q9",
+      "question": "你的理想晚餐是？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "清淡健康的沙拉" },
+        { "key": "exotic", "text": "异国风情的料理" },
+        { "key": "warm", "text": "家常温暖的炖菜" },
+        { "key": "elegant", "text": "精致优雅的西餐" }
+      ]
+    },
+    {
+      "id": "q10",
+      "question": "你更喜欢哪种音乐类型？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "轻快的流行或民谣" },
+        { "key": "calm", "text": "舒缓的古典或爵士" },
+        { "key": "bold", "text": "动感的摇滚或电子" },
+        { "key": "romantic", "text": "浪漫的R&B或法语香颂" }
+      ]
+    },
+    {
+      "id": "q11",
+      "question": "你的工作风格更偏向？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "灵活自由，创意导向" },
+        { "key": "calm", "text": "条理清晰，稳扎稳打" },
+        { "key": "bold", "text": "果断高效，追求突破" },
+        { "key": "warm", "text": "团队协作，注重氛围" }
+      ]
+    },
+    {
+      "id": "q12",
+      "question": "你更喜欢哪种颜色？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "清新的绿色或天蓝" },
+        { "key": "romantic", "text": "温柔的粉色或紫色" },
+        { "key": "elegant", "text": "高级的灰色或米白" },
+        { "key": "mysterious", "text": "深邃的黑色或酒红" }
+      ]
+    },
+    {
+      "id": "q13",
+      "question": "你的起床第一件事是？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "拉开窗帘，呼吸新鲜空气" },
+        { "key": "calm", "text": "冥想或伸展运动" },
+        { "key": "bold", "text": "立刻开始忙碌" },
+        { "key": "warm", "text": "慢慢享用早餐" }
+      ]
+    },
+    {
+      "id": "q14",
+      "question": "你更喜欢哪种电影类型？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "治愈系或青春片" },
+        { "key": "romantic", "text": "浪漫爱情片" },
+        { "key": "mysterious", "text": "悬疑推理片" },
+        { "key": "bold", "text": "动作冒险片" }
+      ]
+    },
+    {
+      "id": "q15",
+      "question": "你的理想居住环境是？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "郊区别墅，有花园" },
+        { "key": "bright", "text": "海景房，视野开阔" },
+        { "key": "elegant", "text": "市中心高层，现代简约" },
+        { "key": "warm", "text": "温馨小公寓，装饰温暖" }
+      ]
+    },
+    {
+      "id": "q16",
+      "question": "收到礼物时，你更看重？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "实用性和创意" },
+        { "key": "romantic", "text": "心意和浪漫氛围" },
+        { "key": "elegant", "text": "品质和品味" },
+        { "key": "warm", "text": "情感连接和回忆" }
+      ]
+    },
+    {
+      "id": "q17",
+      "question": "你的购物习惯是？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "随性购买，看心情" },
+        { "key": "calm", "text": "提前规划，理性消费" },
+        { "key": "bold", "text": "果断下单，追求新潮" },
+        { "key": "elegant", "text": "精挑细选，注重质感" }
+      ]
+    },
+    {
+      "id": "q18",
+      "question": "你更喜欢哪种宠物？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "活泼的狗狗" },
+        { "key": "calm", "text": "优雅的猫咪" },
+        { "key": "exotic", "text": "特别的异宠" },
+        { "key": "warm", "text": "温顺的兔兔" }
+      ]
+    },
+    {
+      "id": "q19",
+      "question": "你的时间管理方式是？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "随性自由，享受当下" },
+        { "key": "calm", "text": "规律作息，井然有序" },
+        { "key": "bold", "text": "高效快节奏" },
+        { "key": "warm", "text": "留白时间，注重生活" }
+      ]
+    },
+    {
+      "id": "q20",
+      "question": "你更喜欢哪种甜点？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "清爽的果冻或慕斯" },
+        { "key": "romantic", "text": "精致的马卡龙" },
+        { "key": "warm", "text": "温暖的芝士蛋糕" },
+        { "key": "bold", "text": "浓郁的巧克力" }
+      ]
+    },
+    {
+      "id": "q21",
+      "question": "你的个人空间布置偏好？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "绿植满屋，生机盎然" },
+        { "key": "calm", "text": "极简留白，干净整洁" },
+        { "key": "romantic", "text": "柔软织物，温馨浪漫" },
+        { "key": "mysterious", "text": "艺术品点缀，个性独特" }
+      ]
+    },
+    {
+      "id": "q22",
+      "question": "面对改变时，你的态度是？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "乐观接受，充满好奇" },
+        { "key": "calm", "text": "谨慎分析，稳妥应对" },
+        { "key": "bold", "text": "主动拥抱，寻求突破" },
+        { "key": "warm", "text": "需要时间，寻求支持" }
+      ]
+    },
+    {
+      "id": "q23",
+      "question": "你更喜欢哪种社交活动？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "野餐或户外聚会" },
+        { "key": "elegant", "text": "艺术沙龙或品鉴会" },
+        { "key": "bold", "text": "派对或音乐节" },
+        { "key": "warm", "text": "小型聚餐或茶话会" }
+      ]
+    },
+    {
+      "id": "q24",
+      "question": "你的阅读偏好是？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "治愈系或旅行散文" },
+        { "key": "romantic", "text": "言情或浪漫小说" },
+        { "key": "mysterious", "text": "悬疑或历史" },
+        { "key": "calm", "text": "哲学或自我提升" }
+      ]
+    },
+    {
+      "id": "q25",
+      "question": "你更喜欢哪种运动方式？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "慢跑或骑行" },
+        { "key": "calm", "text": "瑜伽或普拉提" },
+        { "key": "bold", "text": "拳击或攀岩" },
+        { "key": "romantic", "text": "舞蹈或游泳" }
+      ]
+    },
+    {
+      "id": "q26",
+      "question": "你的记录生活方式是？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "拍照记录美好瞬间" },
+        { "key": "calm", "text": "手账或日记" },
+        { "key": "bold", "text": "视频vlog分享" },
+        { "key": "romantic", "text": "收集信物和纪念品" }
+      ]
+    },
+    {
+      "id": "q27",
+      "question": "你的理想约会场景是？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "公园野餐或徒步" },
+        { "key": "romantic", "text": "烛光晚餐或音乐会" },
+        { "key": "bold", "text": "游乐园或极限运动" },
+        { "key": "elegant", "text": "美术馆或咖啡厅" }
+      ]
+    },
+    {
+      "id": "q28",
+      "question": "你更喜欢哪种香气？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "青草或柑橘" },
+        { "key": "romantic", "text": "玫瑰或茉莉" },
+        { "key": "warm", "text": "香草或檀木" },
+        { "key": "mysterious", "text": "麝香或琥珀" }
+      ]
+    },
+    {
+      "id": "q29",
+      "question": "你的人生格言更接近？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "活在当下，享受每一天" },
+        { "key": "calm", "text": "宁静致远，厚积薄发" },
+        { "key": "bold", "text": "勇敢做自己，不惧挑战" },
+        { "key": "warm", "text": "珍惜相遇，温暖彼此" }
+      ]
+    },
+    {
+      "id": "q30",
+      "question": "如果用一个词形容自己？",
+      "type": "single",
+      "options": [
+        { "key": "fresh", "text": "自由" },
+        { "key": "elegant", "text": "优雅" },
+        { "key": "bold", "text": "热烈" },
+        { "key": "romantic", "text": "浪漫" }
+      ]
+    }
+  ],
+
+  "results": [
+    {
+      "type": "清新自然型",
+      "keywords": ["fresh"],
+      "minMatch": 10,
+      "description": "你就像清晨的第一缕阳光，清新而充满活力。你热爱自然，享受简单纯粹的生活，像森林中的微风一样自由自在。你的性格开朗随和，总能给周围的人带来正能量。在你身上，人们能感受到生命最原始的美好与真诚。",
+      "personality": "自由、乐观、真诚、热爱自然、追求简单",
+      "recommendation": "柑橘调、绿茶调、水生调香水",
+      "perfumeList": [
+        "祖玛珑 青柠罗勒与柑橘",
+        "爱马仕 尼罗河花园",
+        "宝格丽 绿茶",
+        "阿蒂仙 地中海花园"
+      ],
+      "color": "#A8E6CF",
+      "image": "/images/result_fresh.jpg",
+      "shareText": "我是清新自然型！像清晨的阳光一样自由纯粹✨",
+      "tags": ["#清新", "#自然", "#阳光"]
+    },
+    {
+      "type": "优雅知性型",
+      "keywords": ["elegant", "calm"],
+      "minMatch": 10,
+      "description": "你拥有岁月沉淀的优雅气质，像一杯上好的清茶，越品越有韵味。你注重品质与内涵，追求精致而有质感的生活。你的从容不迫和知性美让人印象深刻，举手投足间都散发着迷人的魅力。你像博物馆里的艺术品，值得细细品味。",
+      "personality": "优雅、理性、有品味、内敛、注重细节",
+      "recommendation": "白花调、木质调、清雅茶香调",
+      "perfumeList": ["香奈儿 N°19", "迪奥 真我", "爱马仕 大地", "宝格丽 白茶"],
+      "color": "#E8D5C4",
+      "image": "/images/result_elegant.jpg",
+      "shareText": "我是优雅知性型！如茶般越品越有韵味🍵",
+      "tags": ["#优雅", "#知性", "#品味"]
+    },
+    {
+      "type": "浪漫梦幻型",
+      "keywords": ["romantic"],
+      "minMatch": 10,
+      "description": "你是天生的浪漫主义者，像法式香颂里的旋律一样优美动人。你拥有细腻敏感的心灵，能捕捉到生活中每一个美好的瞬间。玫瑰色的滤镜是你看世界的方式，你相信爱与美的力量，也愿意用温柔去感染这个世界。",
+      "personality": "浪漫、温柔、感性、富有想象力、唯美主义",
+      "recommendation": "玫瑰调、花香调、甜香调",
+      "perfumeList": [
+        "迪奥 真我心悦",
+        "兰蔻 美丽人生",
+        "YSL 反转巴黎",
+        "祖玛珑 红玫瑰"
+      ],
+      "color": "#FFD3E1",
+      "image": "/images/result_romantic.jpg",
+      "shareText": "我是浪漫梦幻型！用玫瑰色滤镜看世界🌹",
+      "tags": ["#浪漫", "#温柔", "#梦幻"]
+    },
+    {
+      "type": "热情活力型",
+      "keywords": ["bold", "bright"],
+      "minMatch": 10,
+      "description": "你像夏日正午的阳光，热情、自信、充满能量。你勇敢地做自己，从不畏惧表达真实的想法。你的感染力极强，总能成为人群中的焦点。你相信人生就该热烈绽放，像烟花一样绚烂夺目，留下属于自己的光芒。",
+      "personality": "热情、自信、勇敢、外向、追求刺激",
+      "recommendation": "辛辣调、柑橘调、果香调",
+      "perfumeList": [
+        "Tom Ford 失落之樱桃",
+        "YSL 黑鸦片",
+        "Gucci 罪爱",
+        "祖玛珑 蓝风铃"
+      ],
+      "color": "#FFB84D",
+      "image": "/images/result_bold.jpg",
+      "shareText": "我是热情活力型！像烟花一样绚烂夺目🎆",
+      "tags": ["#热情", "#自信", "#活力"]
+    },
+    {
+      "type": "温暖治愈型",
+      "keywords": ["warm"],
+      "minMatch": 10,
+      "description": "你就像冬日里的壁炉，给人温暖和安全感。你善良贴心，总是能敏锐地察觉他人的情绪，并给予温柔的抚慰。你相信陪伴的力量，也懂得经营生活中的小确幸。在你身边，人们会感到放松和被爱。",
+      "personality": "温暖、善良、贴心、细腻、重视情感连接",
+      "recommendation": "香草调、东方调、美食调",
+      "perfumeList": [
+        "Guerlain 小黑裙",
+        "祖玛珑 没药与酮香",
+        "Tom Ford 香草咖啡",
+        "香奈儿 Coco小姐"
+      ],
+      "color": "#FFCBA4",
+      "image": "/images/result_warm.jpg",
+      "shareText": "我是温暖治愈型！像冬日壁炉般温暖人心🔥",
+      "tags": ["#温暖", "#治愈", "#贴心"]
+    },
+    {
+      "type": "神秘魅惑型",
+      "keywords": ["mysterious"],
+      "minMatch": 10,
+      "description": "你像午夜的星空，深邃而迷人。你拥有独特的个人魅力和神秘感，从不刻意迎合他人。你享受独处的时光，也懂得在人群中保持自己的边界。你的气质让人着迷却又难以捉摸，像一本永远读不完的书。",
+      "personality": "神秘、独立、有深度、独特、内敛",
+      "recommendation": "琥珀调、麝香调、乌木调",
+      "perfumeList": [
+        "Tom Ford 乌木沉香",
+        "YSL 鸦片",
+        "阿蒂仙 无极乌龙",
+        "祖玛珑 没药与豆蔻"
+      ],
+      "color": "#9B8B9E",
+      "image": "/images/result_mysterious.jpg",
+      "shareText": "我是神秘魅惑型！如午夜星空般深邃迷人🌙",
+      "tags": ["#神秘", "#独立", "#魅惑"]
+    },
+    {
+      "type": "异域风情型",
+      "keywords": ["exotic"],
+      "minMatch": 8,
+      "description": "你像来自远方的香料，充满异域风情和独特韵味。你热爱探索未知，对不同文化充满好奇。你的品味独特而大胆，总能发现别人忽略的美。你的存在本身就是一场冒险，让人想要跟随你去看更广阔的世界。",
+      "personality": "冒险、开放、好奇、独特、富有创造力",
+      "recommendation": "东方香料调、异国花香调、树脂调",
+      "perfumeList": [
+        "YSL 圣罗兰鸦片",
+        "Tom Ford 黑兰花",
+        "阿蒂仙 晚香玉",
+        "帕尔玛之水 克罗尼亚"
+      ],
+      "color": "#D4A574",
+      "image": "/images/result_exotic.jpg",
+      "shareText": "我是异域风情型！像异国香料般独特迷人🌍",
+      "tags": ["#异域", "#冒险", "#独特"]
+    },
+    {
+      "type": "宁静禅意型",
+      "keywords": ["calm"],
+      "minMatch": 12,
+      "description": "你拥有禅师般的宁静气质，像一潭清澈的湖水。你内心强大而平和，不被外界纷扰所困扰。你懂得取舍，知道什么对自己真正重要。你的从容和智慧让人心生敬意，在你身边会感受到难得的安宁与放松。",
+      "personality": "平和、理性、智慧、专注、自律",
+      "recommendation": "檀香调、茶香调、清冷花香调",
+      "perfumeList": [
+        "爱马仕 檀木之旅",
+        "阿蒂仙 午后之水",
+        "宝格丽 绿茶",
+        "三宅一生 一生之水"
+      ],
+      "color": "#C5D8E1",
+      "image": "/images/result_calm.jpg",
+      "shareText": "我是宁静禅意型！如湖水般清澈平和🏞️",
+      "tags": ["#宁静", "#禅意", "#智慧"]
+    }
+  ],
+
+  "resultPage": {
+    "title": "你的专属香水性格",
+    "subtitle": "发现性格中的香气密码",
+    "footer": "长按保存图片，分享给朋友",
+    "qrcode": ""
+  }
+}
