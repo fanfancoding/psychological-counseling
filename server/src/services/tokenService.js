@@ -1,107 +1,106 @@
 const { v4: uuidv4 } = require("uuid");
-const db = require("../config/database");
+const { getCollection } = require("../config/database");
 
 const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000; // 7天（毫秒）
 
 class TokenService {
+  // 获取 tokens 集合
+  getTokensCollection() {
+    return getCollection("tokens");
+  }
+
   // 生成Token
-  generateTokens(templateId, count = 1) {
+  async generateTokens(templateId, count = 1) {
     const tokens = [];
-    const now = Date.now();
-    const expiresAt = now + SEVEN_DAYS;
+    const now = new Date();
+    const expiresAt = new Date(now.getTime() + SEVEN_DAYS);
 
-    const stmt = db.prepare(`
-      INSERT INTO tokens (token, template_id, status, created_at, expires_at)
-      VALUES (?, ?, 'unused', ?, ?)
-    `);
-
+    const documents = [];
     for (let i = 0; i < count; i++) {
       const token = uuidv4();
-      stmt.run(token, templateId, now, expiresAt);
+      documents.push({
+        token,
+        templateId,
+        status: "unused",
+        createdAt: now,
+        expiresAt,
+        usedAt: null,
+        result: null,
+      });
       tokens.push(token);
     }
 
+    await this.getTokensCollection().insertMany(documents);
     return tokens;
   }
 
   // 获取Token详情
-  getToken(token) {
-    const stmt = db.prepare(`
-      SELECT * FROM tokens WHERE token = ?
-    `);
-    const tokenData = stmt.get(token);
+  async getToken(token) {
+    const tokenData = await this.getTokensCollection().findOne({ token });
 
     if (!tokenData) {
       return null;
     }
 
     // 检查是否过期
-    const now = Date.now();
-    if (tokenData.expires_at < now) {
+    const now = new Date();
+    if (tokenData.expiresAt < now && tokenData.status !== "expired") {
       // 更新状态为过期
-      db.prepare(`UPDATE tokens SET status = 'expired' WHERE id = ?`).run(
-        tokenData.id,
+      await this.getTokensCollection().updateOne(
+        { _id: tokenData._id },
+        { $set: { status: "expired" } },
       );
-      return { ...tokenData, status: "expired" };
-    }
-
-    // 解析result字段（如果存在）
-    if (tokenData.result) {
-      try {
-        tokenData.result = JSON.parse(tokenData.result);
-      } catch (e) {
-        tokenData.result = null;
-      }
+      tokenData.status = "expired";
     }
 
     return tokenData;
   }
 
   // 标记Token为已使用并保存结果
-  markAsUsed(token, result) {
-    const now = Date.now();
-    const stmt = db.prepare(`
-      UPDATE tokens 
-      SET status = 'used', used_at = ?, result = ?
-      WHERE token = ? AND status = 'unused'
-    `);
+  async markAsUsed(token, result) {
+    const now = new Date();
+    const updateResult = await this.getTokensCollection().updateOne(
+      { token, status: "unused" },
+      {
+        $set: {
+          status: "used",
+          usedAt: now,
+          result,
+        },
+      },
+    );
 
-    const resultJSON = JSON.stringify(result);
-    const info = stmt.run(now, resultJSON, token);
-
-    return info.changes > 0; // 返回是否更新成功
+    return updateResult.modifiedCount > 0; // 返回是否更新成功
   }
 
   // 获取统计数据
-  getStats() {
-    const total = db.prepare(`SELECT COUNT(*) as count FROM tokens`).get();
-    const unused = db
-      .prepare(`SELECT COUNT(*) as count FROM tokens WHERE status = 'unused'`)
-      .get();
-    const used = db
-      .prepare(`SELECT COUNT(*) as count FROM tokens WHERE status = 'used'`)
-      .get();
-    const expired = db
-      .prepare(`SELECT COUNT(*) as count FROM tokens WHERE status = 'expired'`)
-      .get();
+  async getStats() {
+    const collection = this.getTokensCollection();
+
+    const [total, unused, used, expired] = await Promise.all([
+      collection.countDocuments(),
+      collection.countDocuments({ status: "unused" }),
+      collection.countDocuments({ status: "used" }),
+      collection.countDocuments({ status: "expired" }),
+    ]);
 
     return {
-      total: total.count,
-      unused: unused.count,
-      used: used.count,
-      expired: expired.count,
+      total,
+      unused,
+      used,
+      expired,
     };
   }
 
   // 清理过期Token（定时任务调用）
-  cleanExpiredTokens() {
-    const sevenDaysAgo = Date.now() - SEVEN_DAYS;
-    const stmt = db.prepare(`
-      DELETE FROM tokens WHERE created_at < ?
-    `);
-    const info = stmt.run(sevenDaysAgo);
-    console.log(`🧹 清理了 ${info.changes} 个过期Token`);
-    return info.changes;
+  async cleanExpiredTokens() {
+    const sevenDaysAgo = new Date(Date.now() - SEVEN_DAYS);
+    const deleteResult = await this.getTokensCollection().deleteMany({
+      createdAt: { $lt: sevenDaysAgo },
+    });
+
+    console.log(`🧹 清理了 ${deleteResult.deletedCount} 个过期Token`);
+    return deleteResult.deletedCount;
   }
 }
 

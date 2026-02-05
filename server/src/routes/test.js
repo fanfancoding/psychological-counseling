@@ -8,7 +8,7 @@ const validateToken = require("../middlewares/validateToken");
 // 验证Token并获取模板
 router.get("/validate-token", validateToken, (req, res) => {
   const { tokenData } = req;
-  const template = templateService.loadTemplate(tokenData.template_id);
+  const template = templateService.loadTemplate(tokenData.templateId);
 
   if (!template) {
     return res.status(404).json({
@@ -22,7 +22,7 @@ router.get("/validate-token", validateToken, (req, res) => {
     data: {
       valid: true,
       status: tokenData.status,
-      templateId: tokenData.template_id,
+      templateId: tokenData.templateId,
       template: template,
       result: tokenData.result || null,
     },
@@ -30,54 +30,62 @@ router.get("/validate-token", validateToken, (req, res) => {
 });
 
 // 提交答案
-router.post("/submit-answer", validateToken, (req, res) => {
-  const { tokenData } = req;
-  const { answers } = req.body;
+router.post("/submit-answer", validateToken, async (req, res) => {
+  try {
+    const { tokenData } = req;
+    const { answers } = req.body;
 
-  // 检查是否已使用
-  if (tokenData.status === "used") {
-    return res.status(400).json({
-      code: 400,
-      message: "该测评已完成，不能重复提交",
+    // 检查是否已使用
+    if (tokenData.status === "used") {
+      return res.status(400).json({
+        code: 400,
+        message: "该测评已完成，不能重复提交",
+      });
+    }
+
+    // 检查是否过期
+    if (tokenData.status === "expired") {
+      return res.status(400).json({
+        code: 400,
+        message: "链接已过期",
+      });
+    }
+
+    // 加载模板
+    const template = templateService.loadTemplate(tokenData.templateId);
+    if (!template) {
+      return res.status(404).json({
+        code: 404,
+        message: "测评模板不存在",
+      });
+    }
+
+    // 匹配结果
+    const result = matchResult(answers, template.results);
+
+    // 标记为已使用并保存结果
+    const success = await tokenService.markAsUsed(tokenData.token, result);
+
+    if (!success) {
+      return res.status(500).json({
+        code: 500,
+        message: "保存结果失败",
+      });
+    }
+
+    res.json({
+      code: 200,
+      data: {
+        result: result,
+      },
     });
-  }
-
-  // 检查是否过期
-  if (tokenData.status === "expired") {
-    return res.status(400).json({
-      code: 400,
-      message: "链接已过期",
-    });
-  }
-
-  // 加载模板
-  const template = templateService.loadTemplate(tokenData.template_id);
-  if (!template) {
-    return res.status(404).json({
-      code: 404,
-      message: "测评模板不存在",
-    });
-  }
-
-  // 匹配结果
-  const result = matchResult(answers, template.results);
-
-  // 标记为已使用并保存结果
-  const success = tokenService.markAsUsed(tokenData.token, result);
-
-  if (!success) {
-    return res.status(500).json({
+  } catch (error) {
+    res.status(500).json({
       code: 500,
-      message: "保存结果失败",
+      message: "提交失败",
+      error: error.message,
     });
   }
-
-  res.json({
-    code: 200,
-    data: {
-      result: result,
-    },
-  });
 });
 
 module.exports = router;

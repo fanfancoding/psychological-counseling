@@ -11,7 +11,7 @@ async function validateToken(req, res, next) {
       });
     }
 
-    const tokenData = tokenService.getToken(token);
+    const tokenData = await tokenService.getToken(token);
 
     if (!tokenData) {
       return res.status(404).json({

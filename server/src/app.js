@@ -5,6 +5,7 @@ const compression = require("compression");
 const rateLimit = require("express-rate-limit");
 const path = require("path");
 
+const database = require("./config/database");
 const templateService = require("./services/templateService");
 const errorHandler = require("./middlewares/errorHandler");
 const testRoutes = require("./routes/test");
@@ -43,12 +44,25 @@ app.get("/health", (req, res) => {
 app.use(errorHandler);
 
 // 启动服务
-app.listen(PORT, () => {
-  console.log(`\n🚀 服务器启动成功`);
-  console.log(`📍 地址: http://localhost:${PORT}`);
-  console.log(`🌍 环境: ${process.env.NODE_ENV || "development"}`);
-  console.log("");
+async function startServer() {
+  try {
+    // 连接数据库
+    await database.connect();
 
-  // 预加载模板
-  templateService.preloadTemplates();
-});
+    // 启动 Express 服务
+    app.listen(PORT, () => {
+      console.log(`\n🚀 服务器启动成功`);
+      console.log(`📍 地址: http://localhost:${PORT}`);
+      console.log(`🌍 环境: ${process.env.NODE_ENV || "development"}`);
+      console.log("");
+
+      // 预加载模板
+      templateService.preloadTemplates();
+    });
+  } catch (error) {
+    console.error("❌ 服务器启动失败:", error);
+    process.exit(1);
+  }
+}
+
+startServer();

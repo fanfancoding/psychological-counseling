@@ -1,31 +1,69 @@
-const Database = require("better-sqlite3");
-const path = require("path");
+const { MongoClient } = require("mongodb");
 
-// 创建数据库连接
-const dbPath = path.join(__dirname, "../../data/tokens.db");
-const db = new Database(dbPath);
+// MongoDB 连接配置
+const uri =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/psychological_test";
+const client = new MongoClient(uri);
 
-// 启用WAL模式（提升并发性能）
-db.pragma("journal_mode = WAL");
-db.pragma("cache_size = -8000"); // 8MB缓存
+let db = null;
 
-// 创建表结构
-db.exec(`
-  CREATE TABLE IF NOT EXISTS tokens (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    token TEXT UNIQUE NOT NULL,
-    template_id TEXT NOT NULL,
-    status TEXT DEFAULT 'unused',
-    created_at INTEGER NOT NULL,
-    expires_at INTEGER NOT NULL,
-    used_at INTEGER,
-    result TEXT
-  );
-  
-  CREATE INDEX IF NOT EXISTS idx_token ON tokens(token);
-  CREATE INDEX IF NOT EXISTS idx_expires_at ON tokens(expires_at);
-`);
+// 连接数据库
+async function connect() {
+  try {
+    await client.connect();
+    db = client.db();
 
-console.log("✅ SQLite数据库初始化完成");
+    // 创建集合和索引
+    const tokensCollection = db.collection("tokens");
 
-module.exports = db;
+    // 创建索引
+    await tokensCollection.createIndex({ token: 1 }, { unique: true });
+    await tokensCollection.createIndex({ expiresAt: 1 });
+    await tokensCollection.createIndex({ status: 1 });
+
+    console.log("✅ MongoDB 数据库连接成功");
+    console.log(`📦 数据库: ${db.databaseName}`);
+  } catch (error) {
+    console.error("❌ MongoDB 连接失败:", error.message);
+    process.exit(1);
+  }
+}
+
+// 获取数据库实例
+function getDb() {
+  if (!db) {
+    throw new Error("数据库未初始化，请先调用 connect()");
+  }
+  return db;
+}
+
+// 获取集合
+function getCollection(name) {
+  return getDb().collection(name);
+}
+
+// 优雅关闭
+async function close() {
+  if (client) {
+    await client.close();
+    console.log("👋 MongoDB 连接已关闭");
+  }
+}
+
+// 监听进程退出信号
+process.on("SIGINT", async () => {
+  await close();
+  process.exit(0);
+});
+
+process.on("SIGTERM", async () => {
+  await close();
+  process.exit(0);
+});
+
+module.exports = {
+  connect,
+  getDb,
+  getCollection,
+  close,
+};
