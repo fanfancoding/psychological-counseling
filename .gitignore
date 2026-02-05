@@ -33,3 +33,6 @@ client/dist/
 
 # Server specific
 server/logs/
+*.db
+*.db-wal
+*.db-shm
