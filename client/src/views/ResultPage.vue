@@ -31,47 +31,31 @@
             </div>
           </div>
 
-          <div class="share-text">
+          <!-- <div class="share-text">
             {{ result?.shareText }}
-          </div>
+          </div> -->
         </div>
       </div>
 
-      <!-- 操作按钮 -->
-      <div class="actions">
-        <button class="action-button primary" @click="exportImage" :disabled="exporting">
-          <span class="icon">📸</span>
-          <span>{{ exporting ? '生成中...' : '保存结果图片' }}</span>
-        </button>
-      </div>
+
 
       <!-- 底部提示 -->
-      <div class="footer-hint" v-if="!exporting">
+      <div class="footer-hint">
         本测评仅供娱乐参考，不作为专业建议
       </div>
 
-      <!-- 自定义 Toast 提示 -->
-      <Transition name="fade">
-        <div class="toast" v-if="toast.show">
-          <span>{{ toast.message }}</span>
-        </div>
-      </Transition>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useTestStore } from '../stores/testStore'
-import html2canvas from 'html2canvas'
 
 const router = useRouter()
 const store = useTestStore()
 
-const resultCardRef = ref(null)
-const exporting = ref(false)
-const toast = ref({ show: false, message: '', type: 'success' })
 
 const result = computed(() => store.result)
 
@@ -80,13 +64,6 @@ onMounted(() => {
     router.push('/error')
   }
 })
-
-function showToastMsg (msg, type = 'success') {
-  toast.value = { show: true, message: msg, type }
-  setTimeout(() => {
-    toast.value.show = false
-  }, 3000)
-}
 
 async function exportImage () {
   if (!resultCardRef.value) return
@@ -135,7 +112,7 @@ async function exportImage () {
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
-  padding: 20px 0 40px;
+  padding: 10px 0 40px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -277,38 +254,7 @@ async function exportImage () {
   border-top: 1px solid #F0E6D8;
 }
 
-.actions {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  animation: fadeInUp 0.6s ease-out 0.3s both;
-}
 
-.action-button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 14px 40px;
-  border: none;
-  border-radius: 25px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background: #D4A373;
-  color: white;
-  box-shadow: 0 4px 12px rgba(212, 163, 115, 0.3);
-}
-
-.action-button:hover:not(:disabled) {
-  background: #C69260;
-  transform: translateY(-2px);
-}
-
-.action-button:disabled {
-  background: #E6D8C8;
-  cursor: not-allowed;
-}
 
 .footer-hint {
   text-align: center;
@@ -330,17 +276,7 @@ async function exportImage () {
   }
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 @keyframes fadeIn {
   from {
@@ -352,41 +288,10 @@ async function exportImage () {
   }
 }
 
-/* Toast 样式 */
-.toast {
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(74, 59, 50, 0.95);
-  color: #FFFDF9;
-  padding: 16px 24px;
-  border-radius: 16px;
-  font-size: 15px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0 8px 30px rgba(74, 59, 50, 0.25);
-  z-index: 2000;
-  backdrop-filter: blur(4px);
-  min-width: 200px;
-  justify-content: center;
-}
 
 
-/* 渐变过渡 */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s, transform 0.3s;
-}
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  transform: translate(-50%, -40%);
-  /* 稍微向下偏移一点 */
-}
+
 
 /* 响应式 */
 @media (max-width: 600px) {

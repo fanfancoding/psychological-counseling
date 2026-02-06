@@ -113,11 +113,9 @@ function next () {
 async function submitAnswers () {
   submitting.value = true
   try {
-    const result = await submitAnswer(store.token, store.answers)
-    if (result?.code === 200) {
-      store.setResult(result)
-      router.push('/result')
-    }
+    const res = await submitAnswer(store.token, store.answers)
+    store.setResult(res?.result)
+    router.push('/result')
   } catch (error) {
     alert('提交失败: ' + error.message)
   } finally {
@@ -128,11 +126,11 @@ async function submitAnswers () {
 
 <style scoped>
 .question-page {
-  min-height: 100vh;
+  height: 100vh;
   background-color: #F9F5F1;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  overflow: hidden;
   box-sizing: border-box;
 }
 
@@ -159,12 +157,12 @@ async function submitAnswers () {
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
-  padding: 30px 20px 100px;
-  /* 增加顶部padding给header留空间 */
-  min-height: 100vh;
+  padding: 20px 20px 80px;
+  flex: 1;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* 问题卡片 - 对应图中白色区域 */
@@ -179,9 +177,7 @@ async function submitAnswers () {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* 垂直居中内容 */
-  max-height: 80vh;
-  /* 防止在大屏上拉得太长 */
+  overflow-y: auto;
 }
 
 /* 头部信息 Question 1/30 */
@@ -191,7 +187,7 @@ async function submitAnswers () {
   /* padding-bottom: 20px; */
   position: absolute;
   /* 将进度挪到卡片左上角之外或内部，这里先保持在外部但做调整 */
-  top: 40px;
+  top: 30px;
   /* 调整位置 */
   left: 0;
   right: 0;
@@ -346,6 +342,7 @@ async function submitAnswers () {
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .action-btn.primary {
