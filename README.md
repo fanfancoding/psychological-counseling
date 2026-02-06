@@ -44,6 +44,10 @@ start.bat   # Windows
 - 后端: <http://localhost:3000>
 - Token生成器: <http://localhost:3000/admin.html>
 
+端口占用问题：
+lsof -i :3000 | grep LISTEN | awk '{print $2}' | xargs kill -9
+lsof -i :5173 | grep LISTEN | awk '{print $2}' | xargs kill -9
+
 ### 环境切换
 
 使用环境切换工具：
