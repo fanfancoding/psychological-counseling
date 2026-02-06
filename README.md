@@ -40,8 +40,9 @@ start.bat   # Windows
 
 访问地址：
 
-- 前端: http://localhost:5173
-- 后端: http://localhost:3000
+- 前端: <http://localhost:5173>
+- 后端: <http://localhost:3000>
+- Token生成器: <http://localhost:3000/admin.html>
 
 ### 环境切换
 
@@ -92,11 +93,11 @@ psychological-counseling/
 
 ## 🌐 环境配置
 
-| 环境      | 前端地址                      | 后端地址                          | 数据库                   | 打包命令           |
-| --------- | ----------------------------- | --------------------------------- | ------------------------ | ------------------ |
-| **Local** | http://localhost:5173         | http://localhost:3000             | psychological_test_local | `pnpm build:local` |
-| **Dev**   | https://dev.fanfancoding.asia | https://dev.fanfancoding.asia/api | psychological_test_dev   | `pnpm build:dev`   |
-| **Prod**  | https://www.fanfancoding.asia | https://www.fanfancoding.asia/api | psychological_test_prod  | `pnpm build:prod`  |
+| 环境      | 前端地址                        | 后端地址                            | 数据库                   | 打包命令           |
+| --------- | ------------------------------- | ----------------------------------- | ------------------------ | ------------------ |
+| **Local** | <http://localhost:5173>         | <http://localhost:3000>             | psychological_test_local | `pnpm build:local` |
+| **Dev**   | <https://dev.fanfancoding.asia> | <https://dev.fanfancoding.asia/api> | psychological_test_dev   | `pnpm build:dev`   |
+| **Prod**  | <https://www.fanfancoding.asia> | <https://www.fanfancoding.asia/api> | psychological_test_prod  | `pnpm build:prod`  |
 
 ## 📦 打包部署
 
