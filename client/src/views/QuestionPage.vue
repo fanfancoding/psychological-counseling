@@ -45,7 +45,7 @@
         <p>您已完成所有{{ totalQuestions }}道题目</p>
         <p class="hint">提交后将无法修改答案</p>
         <div class="modal-actions">
-          <button class="modal-btn cancel" @click="showSubmitModal = false">再检查一下</button>
+          <button class="modal-btn cancel" @click="showSubmitModal = false">取消</button>
           <button class="modal-btn confirm" @click="submitAnswers" :disabled="submitting">
             {{ submitting ? '提交中...' : '确认提交' }}
           </button>
@@ -112,11 +112,12 @@ function next () {
 
 async function submitAnswers () {
   submitting.value = true
-
   try {
     const result = await submitAnswer(store.token, store.answers)
-    store.setResult(result)
-    router.push('/result')
+    if (result?.code === 200) {
+      store.setResult(result)
+      router.push('/result')
+    }
   } catch (error) {
     alert('提交失败: ' + error.message)
   } finally {
