@@ -7,7 +7,11 @@ build/
 
 # Environment variables
 .env
-.env.local
+# 保留环境配置模板，但忽略当前使用的 .env
+# .env.local
+# .env.dev
+# .env.development
+# .env.production
 .env.*.local
 
 # Logs
