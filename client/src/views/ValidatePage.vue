@@ -85,13 +85,22 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-color: #F9F5F1;
+  /* 暖米色背景,与问题页和结果页一致 */
   padding: 20px;
 }
 
 .loading-container {
   text-align: center;
-  color: white;
+  color: #4A3B32;
+  /* 深棕色文字 */
+  max-width: 500px;
+  background: white;
+  border-radius: 20px;
+  padding: 60px 40px;
+  box-shadow: 0 4px 20px rgba(139, 94, 60, 0.05);
+  /* 暖色阴影 */
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .perfume-bottle {
@@ -109,8 +118,9 @@ onMounted(async () => {
   transform: translateX(-50%);
   width: 80px;
   height: 100px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 3px solid rgba(255, 255, 255, 0.5);
+  background: rgba(212, 163, 115, 0.1);
+  /* 暖色调香水瓶身 */
+  border: 3px solid rgba(212, 163, 115, 0.3);
   border-radius: 15px;
   backdrop-filter: blur(10px);
 }
@@ -122,8 +132,8 @@ onMounted(async () => {
   transform: translateX(-50%);
   width: 40px;
   height: 30px;
-  background: rgba(255, 255, 255, 0.3);
-  border: 3px solid rgba(255, 255, 255, 0.5);
+  background: rgba(212, 163, 115, 0.2);
+  border: 3px solid rgba(212, 163, 115, 0.4);
   border-radius: 8px 8px 0 0;
 }
 
@@ -140,7 +150,8 @@ onMounted(async () => {
   position: absolute;
   width: 6px;
   height: 6px;
-  background: white;
+  background: #D4A373;
+  /* 暖棕色闪光 */
   border-radius: 50%;
   animation: sparkle 2s ease-in-out infinite;
 }
@@ -182,14 +193,20 @@ onMounted(async () => {
 }
 
 .title {
+  font-family: "Songti SC", "SimSun", "STSong", serif;
+  /* 宋体,与问题页一致 */
   font-size: 28px;
   font-weight: 600;
   margin-bottom: 12px;
+  color: #4A3B32;
+  /* 深棕色 */
   animation: fadeInUp 0.6s ease-out;
 }
 
 .subtitle {
   font-size: 16px;
+  color: #8B735B;
+  /* 中棕色 */
   opacity: 0.9;
   animation: fadeInUp 0.6s ease-out 0.2s both;
 }
@@ -197,9 +214,13 @@ onMounted(async () => {
 .error-message {
   margin-top: 20px;
   padding: 12px 24px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+  background: #FAF5F0;
+  /* 浅暖色背景 */
+  border: 1px solid #E6D8C8;
+  border-radius: 12px;
   font-size: 14px;
+  color: #C69260;
+  /* 错误提示使用较深的暖色 */
   animation: shake 0.5s;
 }
 
@@ -259,6 +280,10 @@ onMounted(async () => {
 
 /* 响应式 */
 @media (max-width: 768px) {
+  .loading-container {
+    padding: 40px 30px;
+  }
+
   .title {
     font-size: 24px;
   }

@@ -22,7 +22,10 @@ router.post("/generate-token", async (req, res) => {
     }
 
     const tokens = await tokenService.generateTokens(templateId, count);
-    const domain = process.env.DOMAIN || "http://192.168.101.185:5174";
+    const domain = (process.env.DOMAIN || "http://192.168.0.105:5173").replace(
+      /\/$/,
+      "",
+    );
     const urls = tokens.map((t) => `${domain}/test?token=${t}`);
 
     res.json({
