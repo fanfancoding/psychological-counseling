@@ -97,11 +97,10 @@ psychological-counseling/
 
 ## 🌐 环境配置
 
-| 环境      | 前端地址                        | 后端地址                            | 数据库                   | 打包命令           |
-| --------- | ------------------------------- | ----------------------------------- | ------------------------ | ------------------ |
-| **Local** | <http://localhost:5173>         | <http://localhost:3000>             | psychological_test_local | `pnpm build:local` |
-| **Dev**   | <https://dev.fanfancoding.asia> | <https://dev.fanfancoding.asia/api> | psychological_test_dev   | `pnpm build:dev`   |
-| **Prod**  | <https://www.fanfancoding.asia> | <https://www.fanfancoding.asia/api> | psychological_test_prod  | `pnpm build:prod`  |
+| 环境            | 前端地址                        | 后端地址                            | 数据库                   | 打包命令           |
+| --------------- | ------------------------------- | ----------------------------------- | ------------------------ | ------------------ |
+| **Local**       | <http://localhost:5173>         | <http://localhost:3000>             | psychological_test_local | `pnpm build:local` |
+| **Dev（正式）** | <https://dev.fanfancoding.asia> | <https://dev.fanfancoding.asia/api> | psychological_test_dev   | `pnpm build:dev`   |
 
 ## 📦 打包部署
 
@@ -112,3 +111,5 @@ cd client
    - 确保手机和电脑连接同一 Wi-Fi。
    - 后端 `.env` 文件中的 `DOMAIN` 已配置为本机局域网 IP，以确保生成的二维码/链接在手机上可访问。
 ```
+
+正式环境 Token 管理后台：<https://dev.fanfancoding.asia/admin.html>
