@@ -92,6 +92,25 @@ class TokenService {
     };
   }
 
+  // 获取Token列表（支持筛选 + 分页）
+  async getTokenList(status = "all", page = 1, pageSize = 20) {
+    const collection = this.getTokensCollection();
+    const query = status === "all" ? {} : { status };
+    const skip = (page - 1) * pageSize;
+
+    const [list, total] = await Promise.all([
+      collection
+        .find(query)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(pageSize)
+        .toArray(),
+      collection.countDocuments(query),
+    ]);
+
+    return { list, total, page, pageSize };
+  }
+
   // 清理过期Token（定时任务调用）
   async cleanExpiredTokens() {
     const sevenDaysAgo = new Date(Date.now() - SEVEN_DAYS);

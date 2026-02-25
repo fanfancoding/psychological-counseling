@@ -14,7 +14,7 @@
         font-family:
           -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         padding: 40px 20px;
-        max-width: 800px;
+        max-width: 900px;
         margin: 0 auto;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
@@ -27,7 +27,7 @@
       }
       h1 {
         color: #333;
-        margin-bottom: 10px;
+        margin-bottom: 6px;
         font-size: 28px;
       }
       .subtitle {
@@ -35,6 +35,8 @@
         margin-bottom: 30px;
         font-size: 14px;
       }
+
+      /* 统计卡片 */
       .stats {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -47,16 +49,41 @@
         padding: 20px;
         border-radius: 12px;
         text-align: center;
+        cursor: pointer;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s,
+          opacity 0.2s;
+        border: 3px solid transparent;
+      }
+      .stat-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+      }
+      .stat-card.active {
+        border-color: #fff;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.5);
+      }
+      .stat-card[data-status="unused"] {
+        background: linear-gradient(135deg, #11998e, #38ef7d);
+      }
+      .stat-card[data-status="used"] {
+        background: linear-gradient(135deg, #f7971e, #ffd200);
+      }
+      .stat-card[data-status="expired"] {
+        background: linear-gradient(135deg, #cb2d3e, #ef473a);
       }
       .stat-number {
         font-size: 32px;
         font-weight: bold;
-        margin-bottom: 5px;
+        margin-bottom: 4px;
       }
       .stat-label {
         font-size: 12px;
         opacity: 0.9;
       }
+
+      /* 表单 */
       .form-group {
         margin-bottom: 20px;
       }
@@ -73,7 +100,7 @@
         border: 2px solid #e1e8ed;
         border-radius: 8px;
         font-size: 14px;
-        transition: all 0.3s;
+        transition: border-color 0.3s;
       }
       input:focus,
       select:focus {
@@ -92,7 +119,7 @@
         color: white;
         border: none;
         border-radius: 8px;
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 500;
         cursor: pointer;
         transition:
@@ -121,7 +148,7 @@
         font-family: "Monaco", "Courier New", monospace;
         font-size: 13px;
         resize: vertical;
-        min-height: 200px;
+        min-height: 180px;
       }
       textarea:focus {
         outline: none;
@@ -135,49 +162,248 @@
         margin-bottom: 20px;
         display: none;
       }
-      .loading {
-        text-align: center;
-        padding: 20px;
+
+      /* 分割线 */
+      .divider {
+        border: none;
+        border-top: 2px solid #f0f0f0;
+        margin: 32px 0;
+      }
+
+      /* Token 列表区域 */
+      .list-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+      .list-header h2 {
+        font-size: 20px;
+        color: #333;
+      }
+      .list-hint {
+        font-size: 13px;
+        color: #999;
+      }
+
+      /* 筛选 Tab */
+      .filter-tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 0;
+      }
+      .tab-btn {
+        padding: 8px 18px;
+        background: none;
+        border: none;
+        border-radius: 8px 8px 0 0;
+        font-size: 14px;
         color: #666;
+        cursor: pointer;
+        font-weight: 500;
+        border-bottom: 3px solid transparent;
+        transform: none;
+        box-shadow: none;
+        transition:
+          color 0.2s,
+          border-color 0.2s;
+        margin-bottom: -2px;
+      }
+      .tab-btn:hover {
+        color: #667eea;
+        transform: none;
+        box-shadow: none;
+      }
+      .tab-btn.active {
+        color: #667eea;
+        border-bottom-color: #667eea;
+      }
+
+      /* 表格 */
+      .token-table-wrap {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      th {
+        background: #f8f9fc;
+        color: #555;
+        font-weight: 600;
+        padding: 10px 12px;
+        text-align: left;
+        border-bottom: 2px solid #eee;
+        white-space: nowrap;
+      }
+      td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #f0f0f0;
+        color: #444;
+        vertical-align: middle;
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      tr:hover td {
+        background: #fafbff;
+      }
+
+      .token-cell {
+        font-family: "Monaco", monospace;
+        font-size: 11px;
+        color: #667eea;
+        word-break: break-all;
+        max-width: 220px;
+      }
+      .copy-btn {
+        padding: 3px 8px;
+        font-size: 11px;
+        border-radius: 4px;
+        background: #f0f2ff;
+        color: #667eea;
+        border: 1px solid #c5cff8;
+        cursor: pointer;
+        transform: none;
+        box-shadow: none;
+        white-space: nowrap;
+      }
+      .copy-btn:hover {
+        background: #667eea;
+        color: white;
+        transform: none;
+        box-shadow: none;
+      }
+
+      /* 状态标签 */
+      .badge {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .badge-unused {
+        background: #e8fdf5;
+        color: #11998e;
+      }
+      .badge-used {
+        background: #fff8e1;
+        color: #e07b00;
+      }
+      .badge-expired {
+        background: #ffeaea;
+        color: #cb2d3e;
+      }
+
+      /* 分页 */
+      .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 20px;
+      }
+      .page-btn {
+        padding: 6px 14px;
+        font-size: 13px;
+        border-radius: 6px;
+        background: #f5f8fa;
+        color: #444;
+        border: 1px solid #e0e0e0;
+        cursor: pointer;
+        transform: none;
+        box-shadow: none;
+      }
+      .page-btn:hover {
+        background: #667eea;
+        color: white;
+        border-color: #667eea;
+        transform: none;
+        box-shadow: none;
+      }
+      .page-btn.active {
+        background: #667eea;
+        color: white;
+        border-color: #667eea;
+      }
+      .page-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      .page-info {
+        font-size: 13px;
+        color: #888;
+      }
+
+      .empty-tip {
+        text-align: center;
+        padding: 40px;
+        color: #bbb;
+        font-size: 14px;
+      }
+      .list-loading {
+        text-align: center;
+        padding: 30px;
+        color: #999;
       }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>🔑 Token管理工具</h1>
-      <p class="subtitle">心理测评H5项目 - 批量生成测评链接</p>
+      <p class="subtitle">心理测评H5项目 - 批量生成 & 查看测评链接</p>
 
+      <!-- 统计卡片（点击可筛选） -->
       <div class="stats" id="stats">
-        <div class="stat-card">
+        <div
+          class="stat-card active"
+          data-status="all"
+          onclick="switchStatFilter('all')"
+        >
           <div class="stat-number" id="totalCount">-</div>
-          <div class="stat-label">总计</div>
+          <div class="stat-label">全部</div>
         </div>
-        <div class="stat-card">
+        <div
+          class="stat-card"
+          data-status="unused"
+          onclick="switchStatFilter('unused')"
+        >
           <div class="stat-number" id="unusedCount">-</div>
           <div class="stat-label">未使用</div>
         </div>
-        <div class="stat-card">
+        <div
+          class="stat-card"
+          data-status="used"
+          onclick="switchStatFilter('used')"
+        >
           <div class="stat-number" id="usedCount">-</div>
           <div class="stat-label">已使用</div>
         </div>
-        <div class="stat-card">
+        <div
+          class="stat-card"
+          data-status="expired"
+          onclick="switchStatFilter('expired')"
+        >
           <div class="stat-number" id="expiredCount">-</div>
           <div class="stat-label">已过期</div>
         </div>
       </div>
 
+      <!-- 生成表单 -->
       <div class="form-group">
         <label for="templateId">测评模板</label>
         <select id="templateId">
           <option value="perfume_test_v1">香水性格测评 v1</option>
         </select>
       </div>
-
       <div class="form-group">
         <label for="count">生成数量 (1-100)</label>
         <input type="number" id="count" value="10" min="1" max="100" />
       </div>
-
       <div class="button-group">
         <button onclick="generateToken()">🎯 批量生成Token</button>
         <button class="secondary" onclick="refreshStats()">🔄 刷新统计</button>
@@ -194,23 +420,101 @@
           placeholder="点击上方按钮生成Token链接..."
         ></textarea>
       </div>
+
+      <hr class="divider" />
+
+      <!-- Token 列表 -->
+      <div class="list-header">
+        <h2>📋 Token 列表</h2>
+        <span class="list-hint" id="listHint"></span>
+      </div>
+
+      <div class="filter-tabs">
+        <button class="tab-btn active" id="tab-all" onclick="switchTab('all')">
+          全部
+        </button>
+        <button class="tab-btn" id="tab-unused" onclick="switchTab('unused')">
+          未使用
+        </button>
+        <button class="tab-btn" id="tab-used" onclick="switchTab('used')">
+          已使用
+        </button>
+        <button class="tab-btn" id="tab-expired" onclick="switchTab('expired')">
+          已过期
+        </button>
+      </div>
+
+      <div id="listLoading" class="list-loading" style="display: none">
+        ⏳ 加载中...
+      </div>
+
+      <div class="token-table-wrap" id="tableWrap">
+        <table id="tokenTable">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>状态</th>
+              <th>创建时间</th>
+              <th>过期时间</th>
+              <th>使用时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="tokenTbody"></tbody>
+        </table>
+        <div class="empty-tip" id="emptyTip" style="display: none">
+          暂无数据
+        </div>
+      </div>
+
+      <div class="pagination" id="pagination"></div>
     </div>
 
     <script>
-      // 动态获取 API 地址（根据当前域名）
       const API_BASE = window.location.origin + "/api";
+      let currentTab = "all";
+      let currentPage = 1;
+      const PAGE_SIZE = 20;
 
-      // 页面加载时获取统计数据
       window.addEventListener("load", () => {
         refreshStats();
+        loadTokenList();
       });
 
-      // 刷新统计数据
+      // 统计卡片点击筛选
+      function switchStatFilter(status) {
+        document
+          .querySelectorAll(".stat-card")
+          .forEach((c) => c.classList.remove("active"));
+        document
+          .querySelector(`.stat-card[data-status="${status}"]`)
+          .classList.add("active");
+        switchTab(status);
+      }
+
+      // Tab 切换
+      function switchTab(status) {
+        currentTab = status;
+        currentPage = 1;
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById(`tab-${status}`).classList.add("active");
+        // 同步统计卡片高亮
+        document
+          .querySelectorAll(".stat-card")
+          .forEach((c) => c.classList.remove("active"));
+        document
+          .querySelector(`.stat-card[data-status="${status}"]`)
+          .classList.add("active");
+        loadTokenList();
+      }
+
+      // 刷新统计
       async function refreshStats() {
         try {
           const res = await fetch(`${API_BASE}/admin/stats`);
           const data = await res.json();
-
           if (data.code === 200) {
             document.getElementById("totalCount").textContent = data.data.total;
             document.getElementById("unusedCount").textContent =
@@ -219,13 +523,139 @@
             document.getElementById("expiredCount").textContent =
               data.data.expired;
           }
-        } catch (error) {
-          console.error("获取统计数据失败:", error);
+        } catch (e) {
+          console.error("获取统计失败:", e);
           alert("⚠️ 无法连接到服务器，请确保后端服务已启动！");
         }
       }
 
-      // 生成Token
+      // 加载 Token 列表
+      async function loadTokenList(page = currentPage) {
+        currentPage = page;
+        const loading = document.getElementById("listLoading");
+        const tableWrap = document.getElementById("tableWrap");
+        const emptyTip = document.getElementById("emptyTip");
+
+        loading.style.display = "block";
+        tableWrap.style.display = "none";
+
+        try {
+          const res = await fetch(
+            `${API_BASE}/admin/tokens?status=${currentTab}&page=${page}&pageSize=${PAGE_SIZE}`,
+          );
+          const data = await res.json();
+          loading.style.display = "none";
+
+          if (data.code !== 200) throw new Error(data.message);
+
+          const { list, total } = data.data;
+          const hint = document.getElementById("listHint");
+          hint.textContent = `共 ${total} 条`;
+
+          if (list.length === 0) {
+            tableWrap.style.display = "block";
+            document.getElementById("tokenTbody").innerHTML = "";
+            emptyTip.style.display = "block";
+            document.getElementById("tokenTable").style.display = "none";
+            renderPagination(total);
+            return;
+          }
+
+          emptyTip.style.display = "none";
+          document.getElementById("tokenTable").style.display = "table";
+          tableWrap.style.display = "block";
+
+          const domain = window.location.origin;
+          const tbody = document.getElementById("tokenTbody");
+          tbody.innerHTML = list
+            .map((t) => {
+              const url = `${domain}/test?token=${t.token}`;
+              const statusMap = {
+                unused: "badge-unused",
+                used: "badge-used",
+                expired: "badge-expired",
+              };
+              const statusLabel = {
+                unused: "未使用",
+                used: "已使用",
+                expired: "已过期",
+              };
+              return `<tr>
+              <td class="token-cell" title="${t.token}">${t.token.substring(0, 18)}…</td>
+              <td><span class="badge ${statusMap[t.status] || ""}">${statusLabel[t.status] || t.status}</span></td>
+              <td>${formatDate(t.createdAt)}</td>
+              <td>${formatDate(t.expiresAt)}</td>
+              <td>${t.usedAt ? formatDate(t.usedAt) : "-"}</td>
+              <td><button class="copy-btn" onclick="copyUrl('${url}')">复制链接</button></td>
+            </tr>`;
+            })
+            .join("");
+
+          renderPagination(total);
+        } catch (e) {
+          loading.style.display = "none";
+          tableWrap.style.display = "block";
+          console.error("加载Token列表失败:", e);
+        }
+      }
+
+      // 渲染分页
+      function renderPagination(total) {
+        const totalPages = Math.ceil(total / PAGE_SIZE);
+        const pg = document.getElementById("pagination");
+        if (totalPages <= 1) {
+          pg.innerHTML = "";
+          return;
+        }
+
+        let html = `<button class="page-btn" onclick="loadTokenList(${currentPage - 1})" ${currentPage === 1 ? "disabled" : ""}>‹ 上一页</button>`;
+        const start = Math.max(1, currentPage - 2);
+        const end = Math.min(totalPages, currentPage + 2);
+        for (let i = start; i <= end; i++) {
+          html += `<button class="page-btn ${i === currentPage ? "active" : ""}" onclick="loadTokenList(${i})">${i}</button>`;
+        }
+        html += `<button class="page-btn" onclick="loadTokenList(${currentPage + 1})" ${currentPage === totalPages ? "disabled" : ""}>下一页 ›</button>`;
+        html += `<span class="page-info">${currentPage} / ${totalPages} 页</span>`;
+        pg.innerHTML = html;
+      }
+
+      // 格式化时间
+      function formatDate(dateStr) {
+        if (!dateStr) return "-";
+        const d = new Date(dateStr);
+        const pad = (n) => String(n).padStart(2, "0");
+        return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      }
+
+      // 复制链接
+      function copyUrl(url) {
+        navigator.clipboard.writeText(url).then(() => {
+          // 简单提示
+          const tip = document.createElement("div");
+          tip.textContent = "✅ 已复制";
+          Object.assign(tip.style, {
+            position: "fixed",
+            bottom: "30px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            background: "#333",
+            color: "#fff",
+            padding: "8px 20px",
+            borderRadius: "20px",
+            fontSize: "14px",
+            zIndex: "9999",
+            opacity: "1",
+            transition: "opacity 0.5s",
+          });
+          document.body.appendChild(tip);
+          setTimeout(() => {
+            tip.style.opacity = "0";
+            setTimeout(() => tip.remove(), 500);
+          }, 1500);
+        });
+      }
+
+      // 生成 Token
       async function generateToken() {
         const templateId = document.getElementById("templateId").value;
         const count = parseInt(document.getElementById("count").value);
@@ -237,42 +667,30 @@
           return;
         }
 
-        // 显示加载状态
         resultArea.value = "⏳ 正在生成Token...";
-
         try {
           const res = await fetch(`${API_BASE}/admin/generate-token`, {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ templateId, count }),
           });
-
           const data = await res.json();
-
           if (data.code === 200) {
             resultArea.value = data.data.tokens.join("\n");
-
-            // 显示成功消息
             document.getElementById("generatedCount").textContent = count;
             successMsg.style.display = "block";
             setTimeout(() => {
               successMsg.style.display = "none";
             }, 3000);
-
-            // 刷新统计
             refreshStats();
-
-            // 自动选中文本
+            loadTokenList();
             resultArea.select();
           } else {
             throw new Error(data.message);
           }
-        } catch (error) {
-          console.error("生成Token失败:", error);
+        } catch (e) {
           resultArea.value = "";
-          alert("❌ 生成失败: " + error.message);
+          alert("❌ 生成失败: " + e.message);
         }
       }
     </script>

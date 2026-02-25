@@ -61,6 +61,23 @@ router.get("/stats", async (req, res) => {
   }
 });
 
+// 查询Token列表（支持按状态筛选 + 分页）
+router.get("/tokens", async (req, res) => {
+  try {
+    const { status = "all", page = 1, pageSize = 20 } = req.query;
+    const tokens = await tokenService.getTokenList(
+      status,
+      parseInt(page),
+      parseInt(pageSize),
+    );
+    res.json({ code: 200, data: tokens });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ code: 500, message: "获取Token列表失败", error: error.message });
+  }
+});
+
 // 清理过期Token
 router.post("/clean-expired", async (req, res) => {
   try {
