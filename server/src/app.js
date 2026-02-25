@@ -14,6 +14,9 @@ const tokenRoutes = require("./routes/token");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// 信任反向代理（Nginx），避免 express-rate-limit X-Forwarded-For 报错
+app.set("trust proxy", 1);
+
 // 中间件
 app.use(cors());
 app.use(compression()); // gzip压缩
